@@ -6,7 +6,7 @@ import movieTrailer from 'movie-trailer';
 
 const base_url = 'https://image.tmdb.org/t/p/original/';
 
-function Row({ title, fetchUrl }) {
+function Row({ title, fetchUrl, isLargeRow }) {
   const [movies, setMovies] = useState([]);
   const [trailerUrl, setTrailerUrl] = useState('');
 
@@ -41,16 +41,18 @@ function Row({ title, fetchUrl }) {
   };
 
   return (
-    <div className="row">
+    <div className='row'>
       <h2>{title}</h2>
 
-      <div className="row_posters">
+      <div className='row_posters'>
         {movies.map((movie) => (
           <img
             key={movie.id}
             onClick={() => handleClick(movie)}
-            className="row_poster"
-            src={`${base_url}${movie.poster_path}`}
+            className={`row_poster ${isLargeRow && 'row_posterLarge'}`}
+            src={`${base_url}${
+              isLargeRow ? movie.poster_path : movie.poster_path
+            }`}
             alt={`${movie.title} || ${movie.original_name}`}
           />
         ))}
